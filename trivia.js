@@ -3,6 +3,7 @@ const answerDiv = document.querySelector('#answer');
 const feedbackDiv = document.querySelector('#feedback');
 let currentQuestion = null; 
 let score = 0;
+let correctAnswered = false; 
 
 function getTriviaQuestion() {
 return new Promise((resolve, reject) => {
@@ -22,10 +23,12 @@ function displayQuestion(triviaQuestion) {
 questionDiv.textContent = triviaQuestion.question;
 answerDiv.value = '';
 feedbackDiv.textContent = '';
+correctAnswered = false;
 }
 function updateScore(correct) {
-    if (correct) {
+    if (correct && !correctAnswered) {
         score++;
+        correctAnswered = true;
     }
     document.querySelector('#score').textContent = `Score: ${score}`;
 }
@@ -33,6 +36,7 @@ document.querySelector('#questionBtn').addEventListener('click', () => {
     getTriviaQuestion().then((question)=> {
         currentQuestion = question;
         displayQuestion(question);
+        questions = questions.filter(q => q !== currentQuestion);
     })
     .catch((error) => {
         console.error(error);
