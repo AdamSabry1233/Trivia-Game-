@@ -76,4 +76,9 @@ button {
     .container {
         padding: 10px;
     }
+    #trivialogo {
+        height: 200px;
+        width: 400px;
+    }
+
 }
